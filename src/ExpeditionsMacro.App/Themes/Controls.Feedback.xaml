@@ -1,0 +1,196 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:ExpeditionsMacro.App.Controls">
+    <Storyboard x:Key="StatusPulse" RepeatBehavior="Forever">
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Duration="0:0:2">
+            <DiscreteDoubleKeyFrame KeyTime="0:0:0.0" Value="1.0" />
+            <DiscreteDoubleKeyFrame KeyTime="0:0:0.4" Value="0.75" />
+            <DiscreteDoubleKeyFrame KeyTime="0:0:0.8" Value="0.5" />
+            <DiscreteDoubleKeyFrame KeyTime="0:0:1.2" Value="0.75" />
+            <DiscreteDoubleKeyFrame KeyTime="0:0:1.6" Value="1.0" />
+        </DoubleAnimationUsingKeyFrames>
+    </Storyboard>
+
+    <Style TargetType="controls:StatusDot">
+        <Setter Property="Width" Value="8" />
+        <Setter Property="Height" Value="8" />
+        <Setter Property="Foreground" Value="{DynamicResource FaintBrush}" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:StatusDot">
+                    <Ellipse Fill="{TemplateBinding Foreground}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="State" Value="Running"><Setter Property="Foreground" Value="{DynamicResource AccentBrush}" /></Trigger>
+            <Trigger Property="State" Value="Waiting"><Setter Property="Foreground" Value="{DynamicResource WarningBrush}" /></Trigger>
+            <Trigger Property="State" Value="Recovering"><Setter Property="Foreground" Value="{DynamicResource WarningBrush}" /></Trigger>
+            <Trigger Property="State" Value="Succeeded"><Setter Property="Foreground" Value="{DynamicResource SuccessBrush}" /></Trigger>
+            <Trigger Property="State" Value="Failed"><Setter Property="Foreground" Value="{DynamicResource ErrorBrush}" /></Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="controls:StatTile">
+        <Setter Property="Foreground" Value="{DynamicResource MutedBrush}" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:StatTile">
+                    <Border Background="{DynamicResource RaisedBrush}" CornerRadius="8" Padding="10" SnapsToDevicePixels="True">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource GroupLabel}"
+                                       Text="{TemplateBinding Label}"
+                                       TextTrimming="CharacterEllipsis" />
+                            <TextBlock x:Name="ValueText"
+                                       Margin="0,4,0,0"
+                                       Style="{StaticResource StatValue}"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       Text="{TemplateBinding Value}" />
+                        </StackPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="HasSignal" Value="True" />
+                                <Condition Property="Tone" Value="Neutral" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="ValueText" Property="Foreground" Value="{DynamicResource TextBrush}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="HasSignal" Value="True" />
+                                <Condition Property="Tone" Value="Success" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="ValueText" Property="Foreground" Value="{DynamicResource SuccessBrush}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="HasSignal" Value="True" />
+                                <Condition Property="Tone" Value="Warning" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="ValueText" Property="Foreground" Value="{DynamicResource WarningBrush}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="HasSignal" Value="True" />
+                                <Condition Property="Tone" Value="Error" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="ValueText" Property="Foreground" Value="{DynamicResource ErrorBrush}" />
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="StatTileLarge" TargetType="controls:StatTile">
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:StatTile">
+                    <Border Background="{DynamicResource RaisedBrush}" CornerRadius="8" Padding="10" SnapsToDevicePixels="True">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource GroupLabel}"
+                                       Text="{TemplateBinding Label}"
+                                       TextTrimming="CharacterEllipsis" />
+                            <TextBlock Margin="0,4,0,0"
+                                       Style="{StaticResource StatValueLarge}"
+                                       FontFamily="{StaticResource MonoFont}"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       Text="{TemplateBinding Value}" />
+                        </StackPanel>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="Badge" TargetType="ContentControl">
+        <Setter Property="Height" Value="20" />
+        <Setter Property="Padding" Value="8,0" />
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="Foreground" Value="{DynamicResource MutedBrush}" />
+        <Setter Property="Background" Value="{DynamicResource RaisedBrush}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Border Background="{TemplateBinding Background}" CornerRadius="{StaticResource RadiusBadge}" SnapsToDevicePixels="True">
+                        <ContentPresenter Margin="{TemplateBinding Padding}" HorizontalAlignment="Center" VerticalAlignment="Center" TextElement.Foreground="{TemplateBinding Foreground}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="BadgeSuccess" TargetType="ContentControl" BasedOn="{StaticResource Badge}">
+        <Setter Property="Foreground" Value="{DynamicResource SuccessBrush}" />
+        <Setter Property="Background" Value="{DynamicResource SuccessSoftBrush}" />
+    </Style>
+
+    <Style x:Key="BadgeWarning" TargetType="ContentControl" BasedOn="{StaticResource Badge}">
+        <Setter Property="Foreground" Value="{DynamicResource WarningBrush}" />
+        <Setter Property="Background" Value="{DynamicResource WarningSoftBrush}" />
+    </Style>
+
+    <Style x:Key="BadgeError" TargetType="ContentControl" BasedOn="{StaticResource Badge}">
+        <Setter Property="Foreground" Value="{DynamicResource ErrorBrush}" />
+        <Setter Property="Background" Value="{DynamicResource ErrorSoftBrush}" />
+    </Style>
+
+    <Style x:Key="BadgeAccent" TargetType="ContentControl" BasedOn="{StaticResource Badge}">
+        <Setter Property="Foreground" Value="{DynamicResource AccentBrush}" />
+        <Setter Property="Background" Value="{DynamicResource AccentSoftBrush}" />
+    </Style>
+
+    <Style x:Key="KbdChip" TargetType="ContentControl">
+        <Setter Property="Height" Value="20" />
+        <Setter Property="MinWidth" Value="20" />
+        <Setter Property="Padding" Value="6,0" />
+        <Setter Property="FontFamily" Value="{StaticResource MonoFont}" />
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="Foreground" Value="{DynamicResource MutedBrush}" />
+        <Setter Property="Background" Value="{DynamicResource RaisedBrush}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="{StaticResource RadiusBadge}" SnapsToDevicePixels="True">
+                        <ContentPresenter Margin="{TemplateBinding Padding}" HorizontalAlignment="Center" VerticalAlignment="Center" TextElement.Foreground="{TemplateBinding Foreground}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="EmptyStateTile" TargetType="Border">
+        <Setter Property="Width" Value="64" />
+        <Setter Property="Height" Value="64" />
+        <Setter Property="Background" Value="{DynamicResource RaisedBrush}" />
+        <Setter Property="CornerRadius" Value="{StaticResource RadiusOverlay}" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+    </Style>
+
+    <Style x:Key="EmptyStateTitle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="Margin" Value="0,12,0,0" />
+    </Style>
+
+    <Style x:Key="EmptyStateCaption" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Foreground" Value="{DynamicResource MutedBrush}" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="MaxWidth" Value="320" />
+        <Setter Property="Margin" Value="0,4,0,0" />
+    </Style>
+</ResourceDictionary>

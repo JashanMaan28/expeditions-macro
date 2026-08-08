@@ -52,6 +52,14 @@ public partial class PlacementModelsPage :
             new PlacementModelAutoSaveSession(
                 services.PlacementModels);
         InitializeComponent();
+        MotionPolicy.SuppressIfDisabled(
+            MatchSettingsOverlay);
+        MotionPolicy.SuppressIfDisabled(
+            MatchSettingsDialog);
+        MotionPolicy.SuppressIfDisabled(
+            MatchStepEditorOverlay);
+        MotionPolicy.SuppressIfDisabled(
+            MatchStepEditorDialog);
         InitializeCatalogRail();
         WireFastEditorEvents();
         FastSetupList.ItemsSource = _setupNodes;

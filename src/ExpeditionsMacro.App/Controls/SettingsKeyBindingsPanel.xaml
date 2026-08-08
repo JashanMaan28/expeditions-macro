@@ -21,13 +21,14 @@
             </StackPanel>
             <Button x:Name="MacroButton"
                     Width="160"
+                    Style="{StaticResource KeyBindingWell}"
                     HorizontalAlignment="Right"
                     controls:Lucide.Icon="Keyboard"
                     Content="F6"
                     Click="MacroButton_Click" />
         </Grid>
 
-        <Grid Margin="0,14,0,0">
+        <Grid Margin="0,12,0,0">
             <StackPanel Margin="0,0,204,0" VerticalAlignment="Center">
                 <TextBlock Style="{StaticResource FieldLabel}" Text="Toggle Play Menu key" />
                 <TextBlock x:Name="PlayStatusText"
@@ -40,9 +41,9 @@
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
                 <Button x:Name="ClearPlayButton"
-                        Width="36"
-                        MinWidth="36"
-                        Height="36"
+                        Width="24"
+                        MinWidth="24"
+                        Height="24"
                         Margin="0,0,8,0"
                         Style="{StaticResource IconButton}"
                         IsEnabled="False"
@@ -54,13 +55,14 @@
                         Click="ClearBindingButton_Click" />
                 <Button x:Name="PlayButton"
                         Width="152"
+                        Style="{StaticResource KeyBindingWell}"
                         controls:Lucide.Icon="Keyboard"
                         Content="Not set"
                         Click="PlayButton_Click" />
             </StackPanel>
         </Grid>
 
-        <Grid Margin="0,14,0,0">
+        <Grid Margin="0,12,0,0">
             <StackPanel Margin="0,0,204,0" VerticalAlignment="Center">
                 <TextBlock Style="{StaticResource FieldLabel}" Text="Toggle Unit Inventory key" />
                 <TextBlock x:Name="UnitStatusText"
@@ -73,9 +75,9 @@
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
                 <Button x:Name="ClearUnitButton"
-                        Width="36"
-                        MinWidth="36"
-                        Height="36"
+                        Width="24"
+                        MinWidth="24"
+                        Height="24"
                         Margin="0,0,8,0"
                         Style="{StaticResource IconButton}"
                         IsEnabled="False"
@@ -87,13 +89,14 @@
                         Click="ClearBindingButton_Click" />
                 <Button x:Name="UnitButton"
                         Width="152"
+                        Style="{StaticResource KeyBindingWell}"
                         controls:Lucide.Icon="Keyboard"
                         Content="Not set"
                         Click="UnitButton_Click" />
             </StackPanel>
         </Grid>
 
-        <Grid Margin="0,14,0,0">
+        <Grid Margin="0,12,0,0">
             <StackPanel Margin="0,0,204,0" VerticalAlignment="Center">
                 <TextBlock Style="{StaticResource FieldLabel}" Text="Toggle Areas Menu key" />
                 <TextBlock x:Name="AreasStatusText"
@@ -106,9 +109,9 @@
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
                 <Button x:Name="ClearAreasButton"
-                        Width="36"
-                        MinWidth="36"
-                        Height="36"
+                        Width="24"
+                        MinWidth="24"
+                        Height="24"
                         Margin="0,0,8,0"
                         Style="{StaticResource IconButton}"
                         IsEnabled="False"
@@ -120,13 +123,14 @@
                         Click="ClearBindingButton_Click" />
                 <Button x:Name="AreasButton"
                         Width="152"
+                        Style="{StaticResource KeyBindingWell}"
                         controls:Lucide.Icon="Keyboard"
                         Content="Not set"
                         Click="AreasButton_Click" />
             </StackPanel>
         </Grid>
 
-        <Grid Margin="0,14,0,0">
+        <Grid Margin="0,12,0,0">
             <StackPanel Margin="0,0,204,0" VerticalAlignment="Center">
                 <TextBlock Style="{StaticResource FieldLabel}" Text="Toggle Cancel Unit Placement key" />
                 <TextBlock x:Name="CancelPlacementStatusText"
@@ -139,9 +143,9 @@
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
                 <Button x:Name="ClearCancelPlacementButton"
-                        Width="36"
-                        MinWidth="36"
-                        Height="36"
+                        Width="24"
+                        MinWidth="24"
+                        Height="24"
                         Margin="0,0,8,0"
                         Style="{StaticResource IconButton}"
                         IsEnabled="False"
@@ -153,13 +157,14 @@
                         Click="ClearBindingButton_Click" />
                 <Button x:Name="CancelPlacementButton"
                         Width="152"
+                        Style="{StaticResource KeyBindingWell}"
                         controls:Lucide.Icon="Keyboard"
                         Content="Z"
                         Click="CancelPlacementButton_Click" />
             </StackPanel>
         </Grid>
 
-        <Grid Margin="0,14,0,0">
+        <Grid Margin="0,12,0,0">
             <StackPanel Margin="0,0,204,0" VerticalAlignment="Center">
                 <TextBlock Style="{StaticResource FieldLabel}" Text="Quick Placement key" />
                 <TextBlock x:Name="QuickPlacementStatusText"
@@ -172,9 +177,9 @@
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
                 <Button x:Name="ClearQuickPlacementButton"
-                        Width="36"
-                        MinWidth="36"
-                        Height="36"
+                        Width="24"
+                        MinWidth="24"
+                        Height="24"
                         Margin="0,0,8,0"
                         Style="{StaticResource IconButton}"
                         IsEnabled="False"
@@ -186,13 +191,14 @@
                         Click="ClearBindingButton_Click" />
                 <Button x:Name="QuickPlacementButton"
                         Width="152"
+                        Style="{StaticResource KeyBindingWell}"
                         controls:Lucide.Icon="Keyboard"
                         Content="Not set"
                         Click="QuickPlacementButton_Click" />
             </StackPanel>
         </Grid>
 
-        <Grid Margin="0,14,0,0">
+        <Grid Margin="0,12,0,0">
             <StackPanel Margin="0,0,204,0" VerticalAlignment="Center">
                 <TextBlock Style="{StaticResource FieldLabel}" Text="Change Unit Targeting key" />
                 <TextBlock x:Name="TargetingStatusText"
@@ -205,9 +211,9 @@
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
                 <Button x:Name="ClearTargetingButton"
-                        Width="36"
-                        MinWidth="36"
-                        Height="36"
+                        Width="24"
+                        MinWidth="24"
+                        Height="24"
                         Margin="0,0,8,0"
                         Style="{StaticResource IconButton}"
                         IsEnabled="False"
@@ -219,13 +225,14 @@
                         Click="ClearBindingButton_Click" />
                 <Button x:Name="TargetingButton"
                         Width="152"
+                        Style="{StaticResource KeyBindingWell}"
                         controls:Lucide.Icon="Keyboard"
                         Content="Not set"
                         Click="TargetingButton_Click" />
             </StackPanel>
         </Grid>
 
-        <Grid Margin="0,14,0,0">
+        <Grid Margin="0,12,0,0">
             <StackPanel Margin="0,0,204,0" VerticalAlignment="Center">
                 <TextBlock Style="{StaticResource FieldLabel}" Text="Upgrade Unit key" />
                 <TextBlock x:Name="UpgradeStatusText"
@@ -238,9 +245,9 @@
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
                 <Button x:Name="ClearUpgradeButton"
-                        Width="36"
-                        MinWidth="36"
-                        Height="36"
+                        Width="24"
+                        MinWidth="24"
+                        Height="24"
                         Margin="0,0,8,0"
                         Style="{StaticResource IconButton}"
                         IsEnabled="False"
@@ -252,13 +259,14 @@
                         Click="ClearBindingButton_Click" />
                 <Button x:Name="UpgradeButton"
                         Width="152"
+                        Style="{StaticResource KeyBindingWell}"
                         controls:Lucide.Icon="Keyboard"
                         Content="Not set"
                         Click="UpgradeButton_Click" />
             </StackPanel>
         </Grid>
 
-        <Grid Margin="0,14,0,0">
+        <Grid Margin="0,12,0,0">
             <StackPanel Margin="0,0,204,0" VerticalAlignment="Center">
                 <TextBlock Style="{StaticResource FieldLabel}" Text="Sell Unit key" />
                 <TextBlock x:Name="SellStatusText"
@@ -271,9 +279,9 @@
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
                 <Button x:Name="ClearSellButton"
-                        Width="36"
-                        MinWidth="36"
-                        Height="36"
+                        Width="24"
+                        MinWidth="24"
+                        Height="24"
                         Margin="0,0,8,0"
                         Style="{StaticResource IconButton}"
                         IsEnabled="False"
@@ -285,13 +293,14 @@
                         Click="ClearBindingButton_Click" />
                 <Button x:Name="SellButton"
                         Width="152"
+                        Style="{StaticResource KeyBindingWell}"
                         controls:Lucide.Icon="Keyboard"
                         Content="Not set"
                         Click="SellButton_Click" />
             </StackPanel>
         </Grid>
 
-        <Grid Margin="0,14,0,0">
+        <Grid Margin="0,12,0,0">
             <StackPanel Margin="0,0,204,0" VerticalAlignment="Center">
                 <TextBlock Style="{StaticResource FieldLabel}" Text="Auto Upgrade Unit key" />
                 <TextBlock x:Name="AutoUpgradeUnitStatusText"
@@ -304,9 +313,9 @@
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
                 <Button x:Name="ClearAutoUpgradeUnitButton"
-                        Width="36"
-                        MinWidth="36"
-                        Height="36"
+                        Width="24"
+                        MinWidth="24"
+                        Height="24"
                         Margin="0,0,8,0"
                         Style="{StaticResource IconButton}"
                         IsEnabled="False"
@@ -318,13 +327,14 @@
                         Click="ClearBindingButton_Click" />
                 <Button x:Name="AutoUpgradeUnitButton"
                         Width="152"
+                        Style="{StaticResource KeyBindingWell}"
                         controls:Lucide.Icon="Keyboard"
                         Content="Not set"
                         Click="AutoUpgradeUnitButton_Click" />
             </StackPanel>
         </Grid>
 
-        <Grid Margin="0,14,0,0">
+        <Grid Margin="0,12,0,0">
             <StackPanel Margin="0,0,204,0" VerticalAlignment="Center">
                 <TextBlock Style="{StaticResource FieldLabel}" Text="Toggle Auto Upgrade Placed Units key" />
                 <TextBlock x:Name="ToggleAutoUpgradePlacedUnitsStatusText"
@@ -337,9 +347,9 @@
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
                 <Button x:Name="ClearToggleAutoUpgradePlacedUnitsButton"
-                        Width="36"
-                        MinWidth="36"
-                        Height="36"
+                        Width="24"
+                        MinWidth="24"
+                        Height="24"
                         Margin="0,0,8,0"
                         Style="{StaticResource IconButton}"
                         IsEnabled="False"
@@ -351,13 +361,14 @@
                         Click="ClearBindingButton_Click" />
                 <Button x:Name="ToggleAutoUpgradePlacedUnitsButton"
                         Width="152"
+                        Style="{StaticResource KeyBindingWell}"
                         controls:Lucide.Icon="Keyboard"
                         Content="Not set"
                         Click="ToggleAutoUpgradePlacedUnitsButton_Click" />
             </StackPanel>
         </Grid>
 
-        <Grid Margin="0,14,0,0">
+        <Grid Margin="0,12,0,0">
             <StackPanel Margin="0,0,204,0" VerticalAlignment="Center">
                 <TextBlock Style="{StaticResource FieldLabel}" Text="Toggle Shift Lock key" />
                 <TextBlock x:Name="ShiftLockStatusText"
@@ -370,9 +381,9 @@
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
                 <Button x:Name="ClearShiftLockButton"
-                        Width="36"
-                        MinWidth="36"
-                        Height="36"
+                        Width="24"
+                        MinWidth="24"
+                        Height="24"
                         Margin="0,0,8,0"
                         Style="{StaticResource IconButton}"
                         IsEnabled="False"

@@ -1,9 +1,11 @@
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using ExpeditionsMacro.App.Controls;
 using ExpeditionsMacro.App.Pages;
 using ExpeditionsMacro.App.Services;
@@ -44,6 +46,7 @@ public partial class MainWindow : Window
             ["Debug"] = new DebugPage(services),
             ["Settings"] = new SettingsPage(services),
         };
+        _macroPage.RuntimeChanged += MacroPage_RuntimeChanged;
         _services.Coordinator.StateChanged += Coordinator_StateChanged;
         _services.Coordinator.OperationFailed += Coordinator_OperationFailed;
         _services.Hotkey.BindingChanged += Hotkey_BindingChanged;
@@ -97,11 +100,57 @@ public partial class MainWindow : Window
             macro.SelectWorkspace(key);
         }
         PageHost.Content = page;
+        PlayPageTransition(slide: !dashboard);
         TitleContext.Text = key;
         _services.Coordinator.DefaultIdleHotkeyAction = page.IdleHotkeyAction;
         await page.OnShownAsync();
         _currentPageKey = key;
         EnsureWorkspaceSize(key);
+    }
+
+    /// <summary>
+    /// Short fade (and rise, except on the Dashboard where the pinned
+    /// Roblox window must not drift against its target box) when the
+    /// visible workspace changes. Render-transform only; layout is
+    /// never animated, and reduced-motion users get an instant switch.
+    /// </summary>
+    private void PlayPageTransition(bool slide)
+    {
+        if (_snapshotMode ||
+            !MotionPolicy.AnimationsEnabled)
+        {
+            return;
+        }
+
+        QuadraticEase ease = new()
+        {
+            EasingMode = EasingMode.EaseOut,
+        };
+        DoubleAnimation fade = new(
+            0,
+            1,
+            TimeSpan.FromMilliseconds(150))
+        {
+            EasingFunction = ease,
+        };
+        PageHost.BeginAnimation(OpacityProperty, fade);
+
+        TranslateTransform transform = new();
+        PageHost.RenderTransform = transform;
+        if (!slide)
+        {
+            return;
+        }
+        DoubleAnimation rise = new(
+            8,
+            0,
+            TimeSpan.FromMilliseconds(180))
+        {
+            EasingFunction = ease,
+        };
+        transform.BeginAnimation(
+            TranslateTransform.YProperty,
+            rise);
     }
 
     private void RestoreNavigationSelection()
@@ -206,12 +255,19 @@ public partial class MainWindow : Window
         Dispatcher.BeginInvoke(() =>
         {
             OperationLabel.Text = _services.Coordinator.Description;
-            OperationDot.Fill = (Brush)FindResource(_services.Coordinator.State switch
+            OperationDot.State = _services.Coordinator.State switch
+            {
+                OperationState.Armed => StatusDotState.Waiting,
+                OperationState.Running => StatusDotState.Running,
+                OperationState.Stopping => StatusDotState.Recovering,
+                _ => StatusDotState.Idle,
+            };
+            OperationLabel.Foreground = (Brush)FindResource(_services.Coordinator.State switch
             {
                 OperationState.Armed => "WarningBrush",
-                OperationState.Running => "SuccessBrush",
+                OperationState.Running => "AccentBrush",
                 OperationState.Stopping => "WarningBrush",
-                _ => "FaintBrush",
+                _ => "TextBrush",
             });
             if (_services.Coordinator.State ==
                     OperationState.Running &&
@@ -362,9 +418,21 @@ public partial class MainWindow : Window
 
     private void UpdateProductFooter()
     {
-        HotkeyHint.Text = $"{_services.Hotkey.DisplayName} start / stop";
+        HotkeyChip.Content = _services.Hotkey.DisplayName;
+        HotkeyHintLabel.Text = "start / stop";
         string version = ProductVersion.Current;
         VersionLabel.Text = $"Version {version}";
+    }
+
+    private void MacroPage_RuntimeChanged(TimeSpan? elapsed)
+    {
+        if (elapsed is null || _navigationRailCollapsed)
+        {
+            OperationRuntime.Visibility = Visibility.Collapsed;
+            return;
+        }
+        OperationRuntime.Text = elapsed.Value.ToString(@"hh\:mm\:ss", CultureInfo.InvariantCulture);
+        OperationRuntime.Visibility = Visibility.Visible;
     }
 
     private void Window_Closing(object? sender, CancelEventArgs e)

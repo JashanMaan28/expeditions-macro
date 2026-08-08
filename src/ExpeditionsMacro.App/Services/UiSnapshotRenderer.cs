@@ -70,6 +70,7 @@ internal static class UiSnapshotRenderer
 
     public static async Task RenderAsync(AppServices services, string outputDirectory)
     {
+        MotionPolicy.SnapshotMode = true;
         string output = Path.GetFullPath(outputDirectory);
         Directory.CreateDirectory(output);
         string progressPath =
@@ -419,9 +420,10 @@ internal static class UiSnapshotRenderer
 
     private static void VerifyBundledFont(MainWindow window)
     {
-        if (!window.FontFamily.FamilyNames.Values.Any(name => string.Equals(name, "Fredoka", StringComparison.OrdinalIgnoreCase)))
+        if (window.FindName("BrandWordmark") is not System.Windows.Controls.TextBlock wordmark
+            || !wordmark.FontFamily.Source.Contains("Fredoka", StringComparison.OrdinalIgnoreCase))
         {
-            throw new InvalidOperationException("The main window did not inherit the embedded Fredoka font. WPF would silently use a fallback typeface.");
+            throw new InvalidOperationException("The titlebar wordmark did not use the embedded Fredoka brand font. WPF would silently use a fallback typeface.");
         }
     }
 

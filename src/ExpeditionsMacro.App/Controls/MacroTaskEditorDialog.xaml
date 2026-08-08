@@ -5,11 +5,16 @@
              Width="640"
              MaxHeight="720">
     <Border Margin="24"
-            Padding="18"
             Background="{DynamicResource SurfaceBrush}"
             BorderBrush="{DynamicResource BorderBrush}"
             BorderThickness="1"
-            CornerRadius="7">
+            CornerRadius="{StaticResource RadiusOverlay}"
+            SnapsToDevicePixels="True">
+        <Border Padding="18"
+                BorderBrush="{DynamicResource InnerHairlineBrush}"
+                BorderThickness="{DynamicResource InnerHairlineThickness}"
+                CornerRadius="{StaticResource RadiusOverlayInner}"
+                SnapsToDevicePixels="True">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -18,14 +23,18 @@
             </Grid.RowDefinitions>
 
             <Grid>
-                <TextBlock x:Name="TaskEditorTitleText"
-                           VerticalAlignment="Center"
-                           Style="{StaticResource SectionTitle}"
-                           Text="Add task" />
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock x:Name="TaskEditorTitleText"
+                               FontSize="14"
+                               FontWeight="SemiBold"
+                               Text="Add task" />
+                    <TextBlock Margin="0,3,40,0"
+                               Style="{StaticResource Caption}"
+                               Text="Choose where the block runs, then set its mode and target."
+                               TextWrapping="Wrap" />
+                </StackPanel>
                 <Button x:Name="CloseTaskEditorButton"
-                        Width="32"
-                        MinWidth="32"
-                        Height="32"
+                        VerticalAlignment="Top"
                         HorizontalAlignment="Right"
                         Style="{StaticResource IconButton}"
                         icons:Lucide.Icon="X"
@@ -259,5 +268,6 @@
                         Content="Add task" />
             </StackPanel>
         </Grid>
+        </Border>
     </Border>
 </UserControl>

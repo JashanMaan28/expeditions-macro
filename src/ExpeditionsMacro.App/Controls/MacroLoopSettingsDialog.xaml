@@ -8,16 +8,22 @@
              FocusManager.IsFocusScope="True"
              KeyboardNavigation.TabNavigation="Cycle"
              PreviewKeyDown="Dialog_PreviewKeyDown">
-    <Border Padding="16"
-            Background="{DynamicResource SurfaceBrush}"
+    <Border Background="{DynamicResource SurfaceBrush}"
             BorderBrush="{DynamicResource BorderBrush}"
             BorderThickness="1"
-            CornerRadius="6">
+            CornerRadius="{StaticResource RadiusOverlay}"
+            SnapsToDevicePixels="True">
+        <Border Padding="16"
+                BorderBrush="{DynamicResource InnerHairlineBrush}"
+                BorderThickness="{DynamicResource InnerHairlineThickness}"
+                CornerRadius="{StaticResource RadiusOverlayInner}"
+                SnapsToDevicePixels="True">
         <StackPanel>
             <Grid>
                 <TextBlock x:Name="TitleText"
                            VerticalAlignment="Center"
-                           Style="{StaticResource SectionTitle}"
+                           FontSize="14"
+                           FontWeight="SemiBold"
                            Text="Loop settings" />
                 <Button Width="30"
                         MinWidth="30"
@@ -90,5 +96,6 @@
                         Click="Apply_Click" />
             </StackPanel>
         </StackPanel>
+        </Border>
     </Border>
 </UserControl>

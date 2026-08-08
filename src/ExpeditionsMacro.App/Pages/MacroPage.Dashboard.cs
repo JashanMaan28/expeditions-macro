@@ -1,5 +1,7 @@
 using System.Windows;
 using System.Windows.Controls;
+using ExpeditionsMacro.App.Controls;
+using ExpeditionsMacro.App.Services;
 
 namespace ExpeditionsMacro.App.Pages;
 
@@ -112,11 +114,11 @@ public partial class MacroPage
         _compactDashboardLayout = compact;
 
         DashboardContentGrid.Margin = compact
-            ? new Thickness(16, 20, 18, 24)
-            : new Thickness(34, 27, 40, 30);
+            ? new Thickness(14, 16, 16, 20)
+            : new Thickness(26, 20, 26, 28);
         RobloxLiveViewCard.Padding = compact
-            ? new Thickness(16)
-            : new Thickness(24);
+            ? new Thickness(12, 10, 12, 10)
+            : new Thickness(16, 14, 16, 14);
 
         DashboardLiveViewColumn.Width = compact
             ? new GridLength(1, GridUnitType.Star)
@@ -142,43 +144,6 @@ public partial class MacroPage
         Grid.SetColumn(
             CurrentRunCard,
             compact ? 0 : 2);
-
-        DashboardDiscordColumnDivider.Width = compact
-            ? new GridLength(0)
-            : new GridLength(1);
-        DashboardFailureAlertColumn.Width = compact
-            ? new GridLength(0)
-            : new GridLength(1, GridUnitType.Star);
-        DashboardDiscordRowGap.Height = compact
-            ? new GridLength(17)
-            : new GridLength(0);
-        DashboardFailureAlertRow.Height = compact
-            ? GridLength.Auto
-            : new GridLength(0);
-        Grid.SetRow(
-            DashboardDiscordDivider,
-            compact ? 1 : 0);
-        Grid.SetColumn(
-            DashboardDiscordDivider,
-            compact ? 0 : 1);
-        DashboardDiscordDivider.Height = compact
-            ? 1
-            : double.NaN;
-        DashboardDiscordDivider.Margin = compact
-            ? new Thickness(0, 8, 0, 8)
-            : new Thickness(0);
-        Grid.SetRow(
-            DashboardFailureAlertPanel,
-            compact ? 2 : 0);
-        Grid.SetColumn(
-            DashboardFailureAlertPanel,
-            compact ? 0 : 2);
-        DashboardWebhookPanel.Margin = compact
-            ? new Thickness(0)
-            : new Thickness(0, 0, 24, 0);
-        DashboardFailureAlertPanel.Margin = compact
-            ? new Thickness(0)
-            : new Thickness(24, 0, 0, 0);
     }
 
     private void RefreshDashboardSettings()
@@ -306,6 +271,17 @@ public partial class MacroPage
             preparationEnabled;
         DashboardKeyBindingsPanel.UpdateBusyState(
             busy);
+        RunStatusDot.State =
+            _services.Coordinator.State switch
+            {
+                OperationState.Armed =>
+                    StatusDotState.Waiting,
+                OperationState.Running =>
+                    StatusDotState.Running,
+                OperationState.Stopping =>
+                    StatusDotState.Recovering,
+                _ => StatusDotState.Idle,
+            };
     }
 
     private void SetActiveWorkspaceSnapshotScroll(
@@ -337,6 +313,8 @@ public partial class MacroPage
         UpdateLayout();
         double emptyCardHeight =
             CurrentRunCard.ActualHeight;
+        double emptyViewportHeight =
+            RunLogViewport.ActualHeight;
         LogText.Text = string.Join(
             Environment.NewLine,
             Enumerable.Range(1, 80)
@@ -351,7 +329,7 @@ public partial class MacroPage
                 emptyCardHeight) > 0.5 ||
             Math.Abs(
                 RunLogViewport.ActualHeight -
-                RunLogViewport.Height) > 0.5)
+                emptyViewportHeight) > 0.5)
         {
             throw new InvalidOperationException(
                 "Dashboard run-log content changed the bounded Current run layout.");

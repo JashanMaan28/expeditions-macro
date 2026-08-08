@@ -1,8 +1,10 @@
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Controls;
+using System.Windows.Media.Animation;
 using ExpeditionsMacro.App.Controls;
 using ExpeditionsMacro.App.Pages;
+using ExpeditionsMacro.App.Services;
 
 namespace ExpeditionsMacro.App;
 
@@ -14,6 +16,7 @@ public partial class MainWindow
     private bool _navigationCollapsedBeforeForced;
     private bool _navigationForcedCollapsed;
     private bool _navigationRailCollapsed;
+    private int _navigationRailAnimationToken;
 
     private RadioButton[] NavigationButtons =>
     [
@@ -92,13 +95,96 @@ public partial class MainWindow
         bool collapsed)
     {
         _navigationRailCollapsed = collapsed;
+        int token = ++_navigationRailAnimationToken;
         double width = collapsed
             ? CollapsedNavigationWidth
             : ExpandedNavigationWidth;
-        NavigationColumn.Width =
-            new GridLength(width);
-        TitleNavigationColumn.Width =
-            new GridLength(width);
+        if (!IsLoaded ||
+            _snapshotMode ||
+            !MotionPolicy.AnimationsEnabled)
+        {
+            NavigationColumn.BeginAnimation(
+                ColumnDefinition.WidthProperty,
+                null);
+            TitleNavigationColumn.BeginAnimation(
+                ColumnDefinition.WidthProperty,
+                null);
+            NavigationColumn.Width =
+                new GridLength(width);
+            TitleNavigationColumn.Width =
+                new GridLength(width);
+            ApplyNavigationRailContent(collapsed);
+            return;
+        }
+
+        // Collapsing swaps to icon-only content before the rail
+        // shrinks; expanding restores labels only after the rail has
+        // grown, so text never overflows the narrow column.
+        if (collapsed)
+        {
+            ApplyNavigationRailContent(true);
+            AnimateNavigationRailWidth(width, null);
+            return;
+        }
+        AnimateNavigationRailWidth(
+            width,
+            () =>
+            {
+                if (token ==
+                    _navigationRailAnimationToken)
+                {
+                    ApplyNavigationRailContent(
+                        false);
+                }
+            });
+    }
+
+    private void AnimateNavigationRailWidth(
+        double targetWidth,
+        Action? completed)
+    {
+        GridLength target = new(targetWidth);
+        QuadraticEase ease = new()
+        {
+            EasingMode = EasingMode.EaseOut,
+        };
+        GridLengthAnimation Build(
+            ColumnDefinition column) => new()
+        {
+            From = column.Width,
+            To = target,
+            Duration = new Duration(
+                TimeSpan.FromMilliseconds(200)),
+            EasingFunction = ease,
+            FillBehavior = FillBehavior.Stop,
+        };
+
+        GridLengthAnimation navigation =
+            Build(NavigationColumn);
+        if (completed is not null)
+        {
+            navigation.Completed += (_, _) =>
+                completed();
+        }
+
+        // The local value is set to the target first so the column
+        // rests there when the Stop-fill animation ends, without a
+        // one-frame jump back.
+        GridLengthAnimation title =
+            Build(TitleNavigationColumn);
+        NavigationColumn.Width = target;
+        TitleNavigationColumn.Width = target;
+        NavigationColumn.BeginAnimation(
+            ColumnDefinition.WidthProperty,
+            navigation);
+        TitleNavigationColumn.BeginAnimation(
+            ColumnDefinition.WidthProperty,
+            title);
+    }
+
+    private void ApplyNavigationRailContent(
+        bool collapsed)
+    {
         BrandContent.Visibility = collapsed
             ? Visibility.Collapsed
             : Visibility.Visible;
@@ -153,13 +239,18 @@ public partial class MainWindow
         HotkeyHint.Visibility = collapsed
             ? Visibility.Collapsed
             : Visibility.Visible;
+        if (collapsed)
+        {
+            OperationRuntime.Visibility =
+                Visibility.Collapsed;
+        }
         VersionLabel.Visibility = collapsed
             ? Visibility.Collapsed
             : Visibility.Visible;
         OperationStatusBorder.Margin = collapsed
             ? new Thickness(10, 0, 10, 8)
             : new Thickness(12, 0, 12, 6);
-        OperationStatusBorder.Padding = collapsed
+        OperationStatusInner.Padding = collapsed
             ? new Thickness(0)
             : new Thickness(10);
         OperationStatusBorder.Height = collapsed
@@ -188,7 +279,7 @@ public partial class MainWindow
             : expandedContent;
         button.Margin = collapsed
             ? new Thickness(10, 0, 10, 8)
-            : new Thickness(12, 0, 12, 8);
+            : new Thickness(12, 0, 12, 4);
         if (collapsed)
         {
             button.Style =
@@ -198,8 +289,11 @@ public partial class MainWindow
             return;
         }
 
-        button.ClearValue(
-            FrameworkElement.StyleProperty);
+        // The expanded rail uses the quiet ghost treatment so these secondary links do
+        // not compete with real actions. Clearing the style would fall back to the
+        // implicit secondary Button instead.
+        button.Style =
+            (Style)FindResource("GhostButton");
         button.ClearValue(
             FrameworkElement.WidthProperty);
     }

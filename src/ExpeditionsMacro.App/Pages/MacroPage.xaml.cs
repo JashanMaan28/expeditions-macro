@@ -58,6 +58,8 @@ public partial class MacroPage : UserControl, IAppPage
             PersistPlanAsync);
         _suppressPlanAutoSave = true;
         InitializeComponent();
+        MotionPolicy.SuppressIfDisabled(TaskEditorDialog);
+        MotionPolicy.SuppressIfDisabled(TaskEditorOverlay);
         _suppressPlanAutoSave = false;
         InitializePlanAutoSave();
         InitializeTaskDialog();
@@ -240,6 +242,7 @@ public partial class MacroPage : UserControl, IAppPage
         {
             _macroOwned = false;
             _runtimeTimer.Stop();
+            RuntimeChanged?.Invoke(null);
             CurrentTaskText.Text = "Current task: none";
             PhaseText.Text = "Plan stopped. Roblox remains at the standard client size.";
             AppendLog("Macro plan stopped.");
@@ -259,13 +262,30 @@ public partial class MacroPage : UserControl, IAppPage
     private void UpdateHotkeyText()
     {
         string hotkey = _services.Hotkey.DisplayName;
-        StartButton.Content = $"Start plan  {hotkey}";
-        StopButton.Content = $"Stop plan  {hotkey}";
+        StartButton.Content = "Start plan";
+        StopButton.Content = "Stop plan";
+        StartButton.ToolTip =
+            $"Start the selected plan ({hotkey})";
+        StopButton.ToolTip =
+            $"Stop the running plan ({hotkey})";
     }
+
+    /// <summary>
+    /// Raised on each tick of the existing run clock so the shell status block can mirror
+    /// the same elapsed value instead of running a second, drifting timer.
+    /// </summary>
+    internal event Action<TimeSpan?>? RuntimeChanged;
 
     private void UpdateRuntime()
     {
-        if (_runStarted is not null) RuntimeText.Text = (DateTimeOffset.Now - _runStarted.Value).ToString(@"hh\:mm\:ss", CultureInfo.InvariantCulture);
+        if (_runStarted is null)
+        {
+            RuntimeChanged?.Invoke(null);
+            return;
+        }
+        TimeSpan elapsed = DateTimeOffset.Now - _runStarted.Value;
+        RuntimeTile.Value = elapsed.ToString(@"hh\:mm\:ss", CultureInfo.InvariantCulture);
+        RuntimeChanged?.Invoke(elapsed);
     }
 
     private void ShowWebhook_Changed(object sender, RoutedEventArgs e)

@@ -3,7 +3,7 @@
     <Style x:Key="PlacementChoiceButton"
            TargetType="RadioButton">
         <Setter Property="MinWidth" Value="50" />
-        <Setter Property="Height" Value="36" />
+        <Setter Property="Height" Value="32" />
         <Setter Property="Padding" Value="12,0" />
         <Setter Property="Margin" Value="0,0,6,0" />
         <Setter Property="Foreground"
@@ -11,7 +11,7 @@
         <Setter Property="Background"
                 Value="{DynamicResource RaisedBrush}" />
         <Setter Property="BorderBrush"
-                Value="{DynamicResource BorderBrush}" />
+                Value="{DynamicResource BorderStrongBrush}" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Template">
             <Setter.Value>
@@ -21,7 +21,8 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="1"
-                            CornerRadius="4">
+                            CornerRadius="{StaticResource RadiusControl}"
+                            SnapsToDevicePixels="True">
                         <ContentPresenter HorizontalAlignment="Center"
                                           VerticalAlignment="Center" />
                     </Border>
@@ -36,10 +37,10 @@
                                  Value="True">
                             <Setter TargetName="ChoiceBorder"
                                     Property="Background"
-                                    Value="{DynamicResource AccentBrush}" />
+                                    Value="{DynamicResource AccentStrongBrush}" />
                             <Setter TargetName="ChoiceBorder"
                                     Property="BorderBrush"
-                                    Value="{DynamicResource AccentBrush}" />
+                                    Value="{DynamicResource AccentStrongBrush}" />
                             <Setter Property="Foreground"
                                     Value="{DynamicResource OnAccentBrush}" />
                         </Trigger>
@@ -65,7 +66,7 @@
                         </MultiTrigger>
                         <Trigger Property="IsEnabled"
                                  Value="False">
-                            <Setter Property="Opacity" Value="0.45" />
+                            <Setter Property="Opacity" Value="0.55" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -76,14 +77,14 @@
     <Style x:Key="PlacementMultiChoiceButton"
            TargetType="CheckBox">
         <Setter Property="MinWidth" Value="50" />
-        <Setter Property="Height" Value="36" />
+        <Setter Property="Height" Value="32" />
         <Setter Property="Padding" Value="12,0" />
         <Setter Property="Foreground"
                 Value="{DynamicResource TextBrush}" />
         <Setter Property="Background"
                 Value="{DynamicResource RaisedBrush}" />
         <Setter Property="BorderBrush"
-                Value="{DynamicResource BorderBrush}" />
+                Value="{DynamicResource BorderStrongBrush}" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Template">
             <Setter.Value>
@@ -93,7 +94,8 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="1"
-                            CornerRadius="4">
+                            CornerRadius="{StaticResource RadiusControl}"
+                            SnapsToDevicePixels="True">
                         <ContentPresenter HorizontalAlignment="Center"
                                           VerticalAlignment="Center" />
                     </Border>
@@ -108,10 +110,10 @@
                                  Value="True">
                             <Setter TargetName="ChoiceBorder"
                                     Property="Background"
-                                    Value="{DynamicResource AccentBrush}" />
+                                    Value="{DynamicResource AccentStrongBrush}" />
                             <Setter TargetName="ChoiceBorder"
                                     Property="BorderBrush"
-                                    Value="{DynamicResource AccentBrush}" />
+                                    Value="{DynamicResource AccentStrongBrush}" />
                             <Setter Property="Foreground"
                                     Value="{DynamicResource OnAccentBrush}" />
                         </Trigger>
@@ -124,7 +126,7 @@
                         <Trigger Property="IsEnabled"
                                  Value="False">
                             <Setter Property="Opacity"
-                                    Value="0.45" />
+                                    Value="0.55" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

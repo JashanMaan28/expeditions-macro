@@ -9,11 +9,16 @@
              AutomationProperties.Name="Match settings dialog"
              FontFamily="{StaticResource UiFont}"
              Foreground="{DynamicResource TextBrush}">
-    <Border Padding="18"
-            Background="{DynamicResource SurfaceBrush}"
+    <Border Background="{DynamicResource SurfaceBrush}"
             BorderBrush="{DynamicResource BorderBrush}"
             BorderThickness="1"
-            CornerRadius="7">
+            CornerRadius="{StaticResource RadiusOverlay}"
+            SnapsToDevicePixels="True">
+        <Border Padding="18"
+                BorderBrush="{DynamicResource InnerHairlineBrush}"
+                BorderThickness="{DynamicResource InnerHairlineThickness}"
+                CornerRadius="{StaticResource RadiusOverlayInner}"
+                SnapsToDevicePixels="True">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -23,7 +28,8 @@
 
             <Grid>
                 <TextBlock VerticalAlignment="Center"
-                           Style="{StaticResource SectionTitle}"
+                           FontSize="14"
+                           FontWeight="SemiBold"
                            Text="Match settings" />
                 <Button Width="32"
                         MinWidth="32"
@@ -120,7 +126,8 @@
                             Background="{DynamicResource RaisedBrush}"
                             BorderBrush="{DynamicResource BorderBrush}"
                             BorderThickness="1"
-                            CornerRadius="5">
+                            CornerRadius="8"
+                            SnapsToDevicePixels="True">
                         <StackPanel>
                             <CheckBox x:Name="AdvancedModeCheck"
                                       FontWeight="SemiBold"
@@ -245,5 +252,6 @@
                         Click="Apply_Click" />
             </StackPanel>
         </Grid>
+        </Border>
     </Border>
 </UserControl>

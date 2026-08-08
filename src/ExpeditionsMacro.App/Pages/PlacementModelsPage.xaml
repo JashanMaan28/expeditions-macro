@@ -8,7 +8,7 @@
         <DataTemplate x:Key="PlacementSetupNodeTemplate"
                       DataType="{x:Type models:PlacementSetupNode}">
             <Grid x:Name="SetupRoot"
-                  MinHeight="32">
+                  MinHeight="30">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="30" />
@@ -24,6 +24,7 @@
                            Grid.Row="1"
                            Margin="0,2,0,0"
                            FontSize="11"
+                           FontFamily="{StaticResource MonoFont}"
                            Foreground="{DynamicResource FaintBrush}"
                            Text="{Binding Row.Status}"
                            TextTrimming="CharacterEllipsis" />
@@ -48,7 +49,7 @@
                              Value="True">
                     <Setter TargetName="SetupName"
                             Property="FontSize"
-                            Value="12" />
+                            Value="11" />
                     <Setter TargetName="SetupName"
                             Property="FontWeight"
                             Value="SemiBold" />
@@ -63,7 +64,7 @@
                              Value="True">
                     <Setter TargetName="SetupRoot"
                             Property="Margin"
-                            Value="18,0,0,0" />
+                            Value="12,0,0,0" />
                 </DataTrigger>
                 <MultiDataTrigger>
                     <MultiDataTrigger.Conditions>
@@ -83,7 +84,7 @@
                              Value="True">
                     <Setter TargetName="SetupRoot"
                             Property="MinHeight"
-                            Value="38" />
+                            Value="34" />
                 </DataTrigger>
             </DataTemplate.Triggers>
         </DataTemplate>
@@ -145,10 +146,47 @@
               KeyboardNavigation.TabNavigation="Cycle"
               PreviewKeyDown="MatchSettingsOverlay_PreviewKeyDown"
               Visibility="Collapsed">
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Style.Triggers>
+                        <Trigger Property="Visibility" Value="Visible">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.15" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
             <icons:PlacementTimingPopover x:Name="MatchSettingsDialog"
                                           Margin="24"
                                           HorizontalAlignment="Stretch"
-                                           VerticalAlignment="Center" />
+                                          VerticalAlignment="Center"
+                                          RenderTransformOrigin="0.5,0.5">
+                <icons:PlacementTimingPopover.RenderTransform>
+                    <ScaleTransform ScaleX="1" ScaleY="1" />
+                </icons:PlacementTimingPopover.RenderTransform>
+                <icons:PlacementTimingPopover.Style>
+                    <Style TargetType="icons:PlacementTimingPopover">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Visibility, ElementName=MatchSettingsOverlay}" Value="Visible">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.2" />
+                                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)" From="0.98" To="1" Duration="0:0:0.2" />
+                                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" From="0.98" To="1" Duration="0:0:0.2" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </icons:PlacementTimingPopover.Style>
+            </icons:PlacementTimingPopover>
         </Grid>
         <Grid x:Name="MatchStepEditorOverlay"
               Grid.ColumnSpan="2"
@@ -158,10 +196,47 @@
               KeyboardNavigation.TabNavigation="Cycle"
               PreviewKeyDown="MatchStepEditorOverlay_PreviewKeyDown"
               Visibility="Collapsed">
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Style.Triggers>
+                        <Trigger Property="Visibility" Value="Visible">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.15" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
             <icons:PlacementStepEditorPopover x:Name="MatchStepEditorDialog"
-                                               Margin="24"
-                                               HorizontalAlignment="Stretch"
-                                               VerticalAlignment="Center" />
+                                              Margin="24"
+                                              HorizontalAlignment="Stretch"
+                                              VerticalAlignment="Center"
+                                              RenderTransformOrigin="0.5,0.5">
+                <icons:PlacementStepEditorPopover.RenderTransform>
+                    <ScaleTransform ScaleX="1" ScaleY="1" />
+                </icons:PlacementStepEditorPopover.RenderTransform>
+                <icons:PlacementStepEditorPopover.Style>
+                    <Style TargetType="icons:PlacementStepEditorPopover">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Visibility, ElementName=MatchStepEditorOverlay}" Value="Visible">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.2" />
+                                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)" From="0.98" To="1" Duration="0:0:0.2" />
+                                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" From="0.98" To="1" Duration="0:0:0.2" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </icons:PlacementStepEditorPopover.Style>
+            </icons:PlacementStepEditorPopover>
         </Grid>
     </Grid>
 </UserControl>

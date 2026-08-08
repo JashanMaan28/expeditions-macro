@@ -36,16 +36,26 @@
                                Height="23"
                                Margin="0,0,9,0"
                                Source="Resources/app-preview.png" />
-                        <TextBlock VerticalAlignment="Center"
+                        <TextBlock x:Name="BrandWordmark"
+                                   VerticalAlignment="Center"
+                                   FontFamily="{StaticResource BrandFont}"
+                                   FontSize="13"
                                    FontWeight="SemiBold"
                                    Text="Expeditions Macro" />
                     </StackPanel>
                 </Grid>
-                <TextBlock x:Name="TitleContext" Grid.Column="1" VerticalAlignment="Center" Foreground="{DynamicResource MutedBrush}" Text="Dashboard" />
+                <StackPanel x:Name="TitleContextRow" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Ellipse Width="3"
+                             Height="3"
+                             Margin="0,0,10,0"
+                             VerticalAlignment="Center"
+                             Fill="{DynamicResource FaintBrush}" />
+                    <TextBlock x:Name="TitleContext" VerticalAlignment="Center" FontSize="12" Foreground="{DynamicResource MutedBrush}" Text="Dashboard" />
+                </StackPanel>
                 <StackPanel Grid.Column="2" Orientation="Horizontal" WindowChrome.IsHitTestVisibleInChrome="True">
-                    <Button Style="{StaticResource IconButton}" Width="44" Height="41" BorderThickness="0" Background="Transparent" icons:Lucide.Icon="Minus" ToolTip="Minimize" Click="Minimize_Click" />
-                    <Button x:Name="MaximizeButton" Style="{StaticResource IconButton}" Width="44" Height="41" BorderThickness="0" Background="Transparent" icons:Lucide.Icon="Square" ToolTip="Maximize" Click="Maximize_Click" />
-                    <Button Style="{StaticResource IconButton}" Width="44" Height="41" BorderThickness="0" Background="Transparent" icons:Lucide.Icon="X" ToolTip="Close" Click="Close_Click" />
+                    <Button Style="{StaticResource TitleBarButton}" icons:Lucide.Icon="Minus" ToolTip="Minimize" Click="Minimize_Click" />
+                    <Button x:Name="MaximizeButton" Style="{StaticResource TitleBarButton}" icons:Lucide.Icon="Square" ToolTip="Maximize" Click="Maximize_Click" />
+                    <Button Style="{StaticResource TitleBarCloseButton}" icons:Lucide.Icon="X" ToolTip="Close" Click="Close_Click" />
                 </StackPanel>
             </Grid>
         </Border>
@@ -53,59 +63,74 @@
         <Border x:Name="UpdateBanner"
                 Grid.Row="1"
                 Margin="12,10,12,0"
-                Padding="14,10"
                 Background="{DynamicResource SurfaceBrush}"
-                BorderBrush="{DynamicResource AccentBrush}"
+                BorderBrush="{DynamicResource BorderBrush}"
                 BorderThickness="1"
-                CornerRadius="6"
+                CornerRadius="{StaticResource RadiusSurface}"
+                SnapsToDevicePixels="True"
                 Visibility="Collapsed">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <StackPanel VerticalAlignment="Center">
-                    <TextBlock x:Name="UpdateBannerTitle"
-                               FontWeight="SemiBold"
-                               Text="Application update available" />
-                    <TextBlock x:Name="UpdateBannerDetail"
-                               Margin="0,3,18,0"
-                               Foreground="{DynamicResource MutedBrush}"
-                               Text="Download the verified installer when you are ready."
-                               TextWrapping="Wrap" />
-                    <ProgressBar x:Name="UpdateBannerProgress"
-                                 Height="3"
-                                 Margin="0,7,18,0"
-                                 Maximum="1"
-                                 Visibility="Collapsed" />
-                </StackPanel>
-                <StackPanel Grid.Column="1"
-                            Orientation="Horizontal"
-                            VerticalAlignment="Center">
-                    <Button x:Name="UpdateReleaseButton"
-                            Margin="0,0,8,0"
-                            icons:Lucide.Icon="ExternalLink"
-                            Content="Release notes"
-                            Click="UpdateRelease_Click" />
-                    <Button x:Name="UpdatePrimaryButton"
-                            Style="{StaticResource PrimaryButton}"
-                            icons:Lucide.Icon="Download"
-                            Content="Download"
-                            Click="UpdatePrimary_Click" />
-                    <Button x:Name="UpdateCancelButton"
-                            Margin="8,0,0,0"
-                            Content="Cancel"
-                            Visibility="Collapsed"
-                            Click="UpdateCancel_Click" />
-                    <Button Margin="8,0,0,0"
-                            Width="34"
-                            MinWidth="34"
-                            Style="{StaticResource IconButton}"
-                            icons:Lucide.Icon="X"
-                            ToolTip="Dismiss update notice"
-                            Click="UpdateDismiss_Click" />
-                </StackPanel>
-            </Grid>
+            <Border BorderBrush="{DynamicResource InnerHairlineBrush}"
+                    BorderThickness="{DynamicResource InnerHairlineThickness}"
+                    CornerRadius="{StaticResource RadiusSurfaceInner}"
+                    SnapsToDevicePixels="True">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Column="0"
+                            Margin="0,8"
+                            Background="{DynamicResource AccentBrush}"
+                            CornerRadius="1.5"
+                            SnapsToDevicePixels="True" />
+                    <StackPanel Grid.Column="1" Margin="13,12,0,12" VerticalAlignment="Center">
+                        <TextBlock x:Name="UpdateBannerTitle"
+                                   FontWeight="SemiBold"
+                                   Text="Application update available" />
+                        <TextBlock x:Name="UpdateBannerDetail"
+                                   Margin="0,3,18,0"
+                                   FontSize="12"
+                                   Foreground="{DynamicResource MutedBrush}"
+                                   Text="Download the verified installer when you are ready."
+                                   TextWrapping="Wrap" />
+                        <ProgressBar x:Name="UpdateBannerProgress"
+                                     Height="3"
+                                     Margin="0,8,18,0"
+                                     Maximum="1"
+                                     Visibility="Collapsed" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="2"
+                                Margin="0,0,14,0"
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center">
+                        <Button x:Name="UpdateReleaseButton"
+                                Height="28"
+                                Margin="0,0,8,0"
+                                icons:Lucide.Icon="ExternalLink"
+                                Content="Release notes"
+                                Click="UpdateRelease_Click" />
+                        <Button x:Name="UpdatePrimaryButton"
+                                Height="28"
+                                MinWidth="104"
+                                Style="{StaticResource PrimaryButton}"
+                                icons:Lucide.Icon="Download"
+                                Content="Download"
+                                Click="UpdatePrimary_Click" />
+                        <Button x:Name="UpdateCancelButton"
+                                Height="28"
+                                Margin="8,0,0,0"
+                                Content="Cancel"
+                                Visibility="Collapsed"
+                                Click="UpdateCancel_Click" />
+                        <Button Margin="8,0,0,0"
+                                Style="{StaticResource IconButton}"
+                                icons:Lucide.Icon="X"
+                                ToolTip="Dismiss update notice"
+                                Click="UpdateDismiss_Click" />
+                    </StackPanel>
+                </Grid>
+            </Border>
         </Border>
 
         <Grid Grid.Row="2">
@@ -131,9 +156,7 @@
                         <TextBlock x:Name="WorkspaceHeader"
                                    Margin="8,0,44,0"
                                    VerticalAlignment="Center"
-                                   FontSize="11"
-                                   FontWeight="SemiBold"
-                                   Foreground="{DynamicResource FaintBrush}"
+                                   Style="{StaticResource GroupLabel}"
                                    Text="WORKSPACE" />
                         <Button x:Name="NavigationRailToggleButton"
                                 Width="32"
@@ -154,10 +177,8 @@
                         <RadioButton x:Name="DashboardNav" GroupName="Navigation" Style="{StaticResource NavigationItem}" IsChecked="True" Tag="Dashboard" icons:Lucide.Icon="LayoutDashboard" Content="Dashboard" Checked="Navigation_Checked" />
                         <RadioButton x:Name="MacroPlanNav" GroupName="Navigation" Style="{StaticResource NavigationItem}" Tag="Macro Plan" icons:Lucide.Icon="Blocks" Content="Macro Plan" Checked="Navigation_Checked" />
                         <TextBlock x:Name="ToolsHeader"
-                                   Margin="18,18,18,7"
-                                   FontSize="11"
-                                   FontWeight="SemiBold"
-                                   Foreground="{DynamicResource FaintBrush}"
+                                   Margin="20,16,20,6"
+                                   Style="{StaticResource GroupLabel}"
                                    Text="TOOLS" />
                         <RadioButton x:Name="PlacementNav" GroupName="Navigation" Style="{StaticResource NavigationItem}" Tag="Placement Setup" icons:Lucide.Icon="MapPin" Content="Placement Setup" Checked="Navigation_Checked" />
                         <RadioButton x:Name="RecordingsNav" GroupName="Navigation" Style="{StaticResource NavigationItem}" Tag="Recordings" icons:Lucide.Icon="CircleDot" Content="Recordings" Visibility="Collapsed" Checked="Navigation_Checked" />
@@ -167,37 +188,66 @@
                     </ScrollViewer>
                     <StackPanel Grid.Row="2">
                         <Button x:Name="SetupGuideButton"
-                                Margin="12,0,12,8"
-                                Height="36"
+                                Margin="12,0,12,4"
+                                Height="30"
                                 MinWidth="0"
+                                HorizontalContentAlignment="Left"
+                                Style="{StaticResource GhostButton}"
                                 icons:Lucide.Icon="CircleHelp"
                                 Content="Setup guide"
                                 ToolTip="Open the setup guide in your browser"
                                 Click="SetupGuide_Click" />
                         <Button x:Name="JoinDiscordButton"
                                 Margin="12,0,12,8"
-                                Height="36"
+                                Height="30"
                                 MinWidth="0"
+                                HorizontalContentAlignment="Left"
+                                Style="{StaticResource GhostButton}"
                                 icons:Lucide.Icon="MessagesSquare"
                                 Content="Join Discord"
                                 ToolTip="Open the Expeditions Macro community invite"
                                 Click="JoinDiscord_Click" />
                         <Border x:Name="OperationStatusBorder"
                                 Margin="12,0,12,6"
-                                Padding="10"
                                 Background="{DynamicResource SurfaceBrush}"
                                 BorderBrush="{DynamicResource BorderBrush}"
                                 BorderThickness="1"
-                                CornerRadius="5">
-                            <Grid x:Name="OperationStatusContent">
-                                <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
-                                <StackPanel x:Name="OperationSummary"
-                                            Orientation="Horizontal">
-                                    <Ellipse x:Name="OperationDot" Width="7" Height="7" Margin="0,0,8,0" VerticalAlignment="Center" Fill="{DynamicResource FaintBrush}" />
-                                    <TextBlock x:Name="OperationLabel" MaxWidth="155" TextTrimming="CharacterEllipsis" FontSize="12" Text="Ready" />
-                                </StackPanel>
-                                <TextBlock x:Name="HotkeyHint" Grid.Row="1" Margin="15,4,0,0" Foreground="{DynamicResource FaintBrush}" FontSize="11" Text="F6 start / stop" />
-                            </Grid>
+                                CornerRadius="{StaticResource RadiusSurface}"
+                                SnapsToDevicePixels="True">
+                            <Border x:Name="OperationStatusInner"
+                                    Padding="10"
+                                    BorderBrush="{DynamicResource InnerHairlineBrush}"
+                                    BorderThickness="{DynamicResource InnerHairlineThickness}"
+                                    CornerRadius="{StaticResource RadiusSurfaceInner}"
+                                    SnapsToDevicePixels="True">
+                                <Grid x:Name="OperationStatusContent">
+                                    <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
+                                    <StackPanel x:Name="OperationSummary"
+                                                Orientation="Horizontal">
+                                        <icons:StatusDot x:Name="OperationDot" Margin="0,0,8,0" VerticalAlignment="Center" />
+                                        <TextBlock x:Name="OperationLabel" MaxWidth="150" TextTrimming="CharacterEllipsis" FontSize="12" FontWeight="Medium" Text="Ready" />
+                                    </StackPanel>
+                                    <TextBlock x:Name="OperationRuntime"
+                                               Grid.Row="1"
+                                               Margin="16,5,0,0"
+                                               Style="{StaticResource MonoCaption}"
+                                               Foreground="{DynamicResource FaintBrush}"
+                                               Text="00:00:00"
+                                               Visibility="Collapsed" />
+                                    <StackPanel x:Name="HotkeyHint"
+                                                Grid.Row="2"
+                                                Margin="16,6,0,0"
+                                                Orientation="Horizontal">
+                                        <ContentControl x:Name="HotkeyChip" Style="{StaticResource KbdChip}" Content="F6" />
+                                        <TextBlock x:Name="HotkeyHintLabel"
+                                                   Margin="7,0,0,0"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="11"
+                                                   Foreground="{DynamicResource FaintBrush}"
+                                                   Text="start / stop" />
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
                         </Border>
                         <TextBlock x:Name="VersionLabel" Margin="18,0,18,10" HorizontalAlignment="Center" Foreground="{DynamicResource FaintBrush}" FontSize="10" Text="Version" />
                     </StackPanel>

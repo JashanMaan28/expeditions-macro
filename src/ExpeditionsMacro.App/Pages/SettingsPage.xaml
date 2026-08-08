@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:icons="clr-namespace:ExpeditionsMacro.App.Controls">
     <ScrollViewer x:Name="SettingsScroll" VerticalScrollBarVisibility="Auto">
-        <Grid Margin="34,28,42,34" MaxWidth="900" HorizontalAlignment="Left">
+        <Grid Margin="26,20,26,28" MaxWidth="860" HorizontalAlignment="Center">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -15,19 +15,19 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <StackPanel Margin="0,0,0,28">
+            <StackPanel Margin="0,0,0,20">
                 <TextBlock Style="{StaticResource PageTitle}" Text="Settings" />
             </StackPanel>
 
             <Border Grid.Row="1" Style="{StaticResource SectionDivider}">
                 <Grid>
-                    <Grid.ColumnDefinitions><ColumnDefinition Width="220" /><ColumnDefinition Width="420" /></Grid.ColumnDefinitions>
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="250" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
                     <StackPanel>
                         <TextBlock Style="{StaticResource SectionTitle}" Text="Appearance" />
                         <TextBlock Margin="0,5,24,0" Style="{StaticResource Caption}" Text="System follows the Windows app theme and updates while the utility is open." />
                     </StackPanel>
                     <Grid Grid.Column="1">
-                        <Grid.RowDefinitions><RowDefinition Height="48" /><RowDefinition Height="48" /></Grid.RowDefinitions>
+                        <Grid.RowDefinitions><RowDefinition Height="40" /><RowDefinition Height="40" /></Grid.RowDefinitions>
                         <TextBlock Style="{StaticResource FieldLabel}" Text="Theme" />
                         <ComboBox x:Name="ThemeCombo" Width="180" HorizontalAlignment="Right" SelectionChanged="ThemeCombo_SelectionChanged" />
                         <CheckBox x:Name="MinimizeCheck" Grid.Row="1" VerticalAlignment="Center" Content="Minimize this utility while automation is running" Checked="MinimizeCheck_Changed" Unchecked="MinimizeCheck_Changed" />
@@ -39,8 +39,8 @@
                     Style="{StaticResource SectionDivider}">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="220" />
-                        <ColumnDefinition Width="420" />
+                        <ColumnDefinition Width="250" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <StackPanel>
                         <TextBlock Style="{StaticResource SectionTitle}"
@@ -56,7 +56,7 @@
                                   Checked="AutoCheckForUpdatesCheck_Changed"
                                   Unchecked="AutoCheckForUpdatesCheck_Changed" />
                         <TextBlock x:Name="UpdateChannelText"
-                                   Margin="50,4,0,0"
+                                   Margin="26,4,0,0"
                                    Style="{StaticResource Caption}"
                                    Text="Prerelease channel" />
                         <TextBlock x:Name="ApplicationUpdateStatusText"
@@ -87,8 +87,8 @@
                     Style="{StaticResource SectionDivider}">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="220" />
-                        <ColumnDefinition Width="420" />
+                        <ColumnDefinition Width="250" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <StackPanel>
                         <TextBlock Style="{StaticResource SectionTitle}"
@@ -104,7 +104,7 @@
                                   AutomationProperties.HelpText="Shows the Recordings workspace and Recording Mode in Placement Setup."
                                   Checked="ManualRecordingsCheck_Changed"
                                   Unchecked="ManualRecordingsCheck_Changed" />
-                        <TextBlock Margin="50,5,0,0"
+                        <TextBlock Margin="26,5,0,0"
                                    Style="{StaticResource Caption}"
                                    Text="Shows the Recordings workspace and lets Placement Setup replay precisely timed keyboard and mouse input."
                                    TextWrapping="Wrap" />
@@ -117,20 +117,22 @@
                                              Visibility="Collapsed" />
 
             <Border Grid.Row="5" Style="{StaticResource SectionDivider}">
-                <StackPanel Width="640" HorizontalAlignment="Left">
-                    <TextBlock Style="{StaticResource SectionTitle}" Text="UI scale calibration" />
-                    <TextBlock Margin="0,5,0,0" Style="{StaticResource Caption}" TextWrapping="Wrap" Text="Compare Roblox's rendered interface with the standard detector scale. The overlay stays click-through while you adjust UI Scale in Roblox settings." />
-                    <Grid Margin="0,16,0,0">
-                        <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
-                        <TextBlock x:Name="UiScaleOverlayStatusText" Margin="0,0,24,0" VerticalAlignment="Center" Style="{StaticResource Caption}" TextWrapping="Wrap" Text="Roblox will be resized to the standard 808 by 611 client size." />
-                        <Button x:Name="UiScaleOverlayButton" Grid.Column="1" MinWidth="205" icons:Lucide.Icon="ScanLine" Content="Show calibration overlay" Click="UiScaleOverlayButton_Click" />
-                    </Grid>
-                </StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="250" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource SectionTitle}" Text="UI scale calibration" />
+                        <TextBlock Margin="0,5,24,0" Style="{StaticResource Caption}" TextWrapping="Wrap" Text="Compare Roblox's rendered interface with the standard detector scale. The overlay stays click-through while you adjust UI Scale in Roblox settings." />
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        <TextBlock x:Name="UiScaleOverlayStatusText" Style="{StaticResource Caption}" TextWrapping="Wrap" Text="Roblox will be resized to the standard 808 by 611 client size." />
+                        <Button x:Name="UiScaleOverlayButton" Margin="0,10,0,0" HorizontalAlignment="Right" MinWidth="205" icons:Lucide.Icon="ScanLine" Content="Show calibration overlay" Click="UiScaleOverlayButton_Click" />
+                    </StackPanel>
+                </Grid>
             </Border>
 
             <Border Grid.Row="6" Style="{StaticResource SectionDivider}">
                 <Grid>
-                    <Grid.ColumnDefinitions><ColumnDefinition Width="220" /><ColumnDefinition Width="420" /></Grid.ColumnDefinitions>
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="250" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
                     <StackPanel>
                         <TextBlock Style="{StaticResource SectionTitle}" Text="Local data" />
                         <TextBlock Margin="0,5,24,0" Style="{StaticResource Caption}" Text="Models, presets, recordings, secrets, and logs stay under your Windows profile." />
@@ -149,19 +151,16 @@
                     Grid.Row="7"
                     Style="{StaticResource SectionDivider}">
                 <Grid>
-                    <Grid.ColumnDefinitions><ColumnDefinition Width="220" /><ColumnDefinition Width="420" /></Grid.ColumnDefinitions>
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="250" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
                     <StackPanel>
                         <TextBlock Style="{StaticResource SectionTitle}" Text="Diagnostics" />
                         <TextBlock Margin="0,5,24,0" Style="{StaticResource Caption}" Text="Current application and automation status." />
                     </StackPanel>
                     <StackPanel Grid.Column="1">
-                        <TextBlock FontWeight="SemiBold"
-                                   Text="Key bindings cannot be changed here." />
-                        <TextBlock Margin="0,4,0,0"
-                                   Style="{StaticResource Caption}"
-                                   Text="To edit them, open Dashboard and scroll to Controls."
+                        <TextBlock Style="{StaticResource Caption}"
+                                   Text="Key bindings are read-only here. Edit them from the Controls card on the Dashboard."
                                    TextWrapping="Wrap" />
-                        <Border Margin="0,12,0,0" Background="{DynamicResource SurfaceBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="4">
+                        <Border Margin="0,12,0,0" Background="{DynamicResource SurfaceBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="8">
                             <StackPanel>
                                 <Grid Margin="12,10"><TextBlock Foreground="{DynamicResource MutedBrush}" Text="Application" /><TextBlock x:Name="VersionText" HorizontalAlignment="Right" /></Grid>
                                 <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0" />
@@ -198,22 +197,22 @@
                 </Grid>
             </Border>
 
-            <StackPanel Grid.Row="8" Width="640" HorizontalAlignment="Left">
+            <StackPanel Grid.Row="8">
                 <TextBlock Style="{StaticResource SectionTitle}" Text="Debug capture" />
                 <CheckBox x:Name="DebugModeCheck"
                           Margin="0,14,0,0"
                           Content="Enable Debug workspace"
                           Checked="DebugModeCheck_Changed"
                           Unchecked="DebugModeCheck_Changed" />
-                <TextBlock Margin="50,5,0,0"
+                <TextBlock Margin="26,5,0,0"
                            Style="{StaticResource Caption}"
                            TextWrapping="Wrap"
                            Text="Shows a Debug tab with isolated navigation, team, detector, and live checkpoint tools." />
                 <TextBlock x:Name="DebugCaptureDescription" Margin="0,5,0,0" Style="{StaticResource Caption}" Text="Record the Roblox client at the standard 808 by 611 size. F6 starts and stops capture and saves a ZIP for bug reports." />
                 <CheckBox x:Name="AutoCaptureOnErrorCheck" Margin="0,14,0,0" Content="Automatically save 20 screenshots when a macro fails" Checked="AutoCaptureOnErrorCheck_Changed" Unchecked="AutoCaptureOnErrorCheck_Changed" />
-                <TextBlock Margin="50,5,0,0" Style="{StaticResource Caption}" TextWrapping="Wrap" Text="Keeps the latest 10 action-state frames, then captures 10 more at 0.5-second intervals after the failure. The 10 newest automatic error ZIPs are retained." />
+                <TextBlock Margin="26,5,0,0" Style="{StaticResource Caption}" TextWrapping="Wrap" Text="Keeps the latest 10 action-state frames, then captures 10 more at 0.5-second intervals after the failure. The 10 newest automatic error ZIPs are retained." />
                 <CheckBox x:Name="IncludeLogsCheck" Margin="0,12,0,0" Content="Include the current macro run log in diagnostic ZIPs" Checked="IncludeLogsCheck_Changed" Unchecked="IncludeLogsCheck_Changed" />
-                <TextBlock Margin="50,5,0,0" Style="{StaticResource Caption}" TextWrapping="Wrap" Text="Applies to manual and automatic captures. Review the log before sharing because it can contain local paths and operational details." />
+                <TextBlock Margin="26,5,0,0" Style="{StaticResource Caption}" TextWrapping="Wrap" Text="Applies to manual and automatic captures. Review the log before sharing because it can contain local paths and operational details." />
                 <Border Margin="0,18,0,0"
                         Padding="14"
                         Background="{DynamicResource SurfaceBrush}"

@@ -1,4 +1,6 @@
 using System.Collections.Concurrent;
+using System.Windows;
+using ExpeditionsMacro.App.Controls;
 using ExpeditionsMacro.Core.Models;
 using ExpeditionsMacro.Core.Persistence;
 
@@ -118,7 +120,8 @@ public partial class MacroPage
             {
                 case MacroPlanAutoSaveState.Pending:
                 case MacroPlanAutoSaveState.Saving:
-                    ShowPlanBlocksStatus(
+                    ShowPlanAutoSaveIndicator(
+                        StatusDotState.Recovering,
                         "Saving\u2026");
                     break;
                 case MacroPlanAutoSaveState.Saved:
@@ -133,17 +136,41 @@ public partial class MacroPage
                         _replacedPlanIds[e.Plan.Id] =
                             e.SourcePlanId;
                     }
-                    ShowPlanBlocksStatus("Saved.");
+                    ShowPlanAutoSaveIndicator(
+                        StatusDotState.Succeeded,
+                        "Saved");
                     RefreshSavedPlanChoice(
                         e.Plan);
                     break;
                 case MacroPlanAutoSaveState.Failed:
+                    ShowPlanAutoSaveIndicator(
+                        StatusDotState.Failed,
+                        "Not saved");
+                    // The failure detail stays in the blocks status line so a failed
+                    // write remains visibly retryable rather than collapsing to a chip.
                     ShowPlanBlocksStatus(
                         $"Could not save: " +
                         $"{e.Error?.Message ?? "Unknown error."}");
                     break;
             }
         });
+    }
+
+    private void ShowPlanAutoSaveIndicator(
+        StatusDotState state,
+        string text)
+    {
+        PlanAutoSaveDot.State = state;
+        PlanAutoSaveText.Text = text;
+        PlanAutoSaveText.Foreground =
+            (System.Windows.Media.Brush)FindResource(
+                state == StatusDotState.Failed
+                    ? "ErrorBrush"
+                    : "MutedBrush");
+        PlanAutoSaveDot.Visibility =
+            Visibility.Visible;
+        PlanAutoSaveText.Visibility =
+            Visibility.Visible;
     }
 
     private void RefreshSavedPlanChoice(

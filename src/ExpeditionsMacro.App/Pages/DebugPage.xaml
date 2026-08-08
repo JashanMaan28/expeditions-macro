@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:icons="clr-namespace:ExpeditionsMacro.App.Controls"
              PreviewKeyDown="DebugPage_PreviewKeyDown">
-    <Grid Margin="34,28,38,32">
+    <Grid Margin="28,22,32,26">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="18" />
@@ -397,7 +397,7 @@
                         Background="{DynamicResource SurfaceBrush}"
                         BorderBrush="{DynamicResource BorderBrush}"
                         BorderThickness="1"
-                        CornerRadius="5"
+                        CornerRadius="{StaticResource RadiusSurface}"
                         ClipToBounds="True">
                     <Grid>
                         <Image x:Name="CheckpointImage"

@@ -46,7 +46,7 @@
                 Padding="8,0"
                 Background="{DynamicResource SurfaceBrush}"
                 BorderThickness="2"
-                CornerRadius="3"
+                CornerRadius="{StaticResource RadiusBadge}"
                 Style="{StaticResource MarkerLabel}">
             <StackPanel HorizontalAlignment="Center"
                         VerticalAlignment="Center"

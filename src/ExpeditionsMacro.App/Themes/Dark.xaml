@@ -1,22 +1,36 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Color x:Key="CanvasColor">#0F1010</Color>
-    <Color x:Key="SidebarColor">#121313</Color>
-    <Color x:Key="SurfaceColor">#181819</Color>
-    <Color x:Key="RaisedColor">#252528</Color>
-    <Color x:Key="HoverColor">#202123</Color>
-    <Color x:Key="SelectedColor">#2B2C30</Color>
-    <Color x:Key="BorderColor">#333438</Color>
-    <Color x:Key="TextColor">#F0F1F2</Color>
-    <Color x:Key="MutedColor">#A1A4A8</Color>
-    <Color x:Key="FaintColor">#74777C</Color>
-    <Color x:Key="AccentColor">#7780FA</Color>
+    <Color x:Key="SidebarColor">#131415</Color>
+    <Color x:Key="SurfaceColor">#17181A</Color>
+    <Color x:Key="RaisedColor">#1E1F22</Color>
+    <Color x:Key="HoverColor">#14FFFFFF</Color>
+    <Color x:Key="SelectedColor">#1FFFFFFF</Color>
+    <Color x:Key="BorderColor">#14FFFFFF</Color>
+    <Color x:Key="BorderStrongColor">#24FFFFFF</Color>
+    <Color x:Key="InnerHairlineColor">#0FFFFFFF</Color>
+    <Color x:Key="TextColor">#F2F3F5</Color>
+    <Color x:Key="MutedColor">#A6A9AE</Color>
+    <Color x:Key="FaintColor">#83868B</Color>
+    <Color x:Key="AccentColor">#7B84FB</Color>
+    <Color x:Key="AccentHoverColor">#8A92FC</Color>
+    <Color x:Key="AccentPressedColor">#6C75EE</Color>
+    <Color x:Key="AccentStrongColor">#5A63E9</Color>
+    <Color x:Key="AccentStrongHoverColor">#4F58D8</Color>
+    <Color x:Key="AccentStrongPressedColor">#4A53D0</Color>
+    <Color x:Key="AccentSoftColor">#2E7B84FB</Color>
     <Color x:Key="OnAccentColor">#FFFFFF</Color>
     <Color x:Key="SuccessColor">#55B887</Color>
     <Color x:Key="WarningColor">#D6A84B</Color>
-    <Color x:Key="ErrorColor">#D96770</Color>
+    <Color x:Key="ErrorColor">#E06B74</Color>
+    <Color x:Key="SuccessSoftColor">#2455B887</Color>
+    <Color x:Key="WarningSoftColor">#24D6A84B</Color>
+    <Color x:Key="ErrorSoftColor">#24E06B74</Color>
+    <Color x:Key="ScrollThumbColor">#1AFFFFFF</Color>
+    <Color x:Key="ScrollThumbHoverColor">#29FFFFFF</Color>
     <Color x:Key="MatchStepReconfigureColor">#55AFC0</Color>
     <Color x:Key="MatchStepUpgradeColor">#A98AEF</Color>
+    <Thickness x:Key="InnerHairlineThickness">0,1,0,0</Thickness>
     <SolidColorBrush x:Key="CanvasBrush" Color="{StaticResource CanvasColor}" />
     <SolidColorBrush x:Key="SidebarBrush" Color="{StaticResource SidebarColor}" />
     <SolidColorBrush x:Key="SurfaceBrush" Color="{StaticResource SurfaceColor}" />
@@ -24,14 +38,29 @@
     <SolidColorBrush x:Key="HoverBrush" Color="{StaticResource HoverColor}" />
     <SolidColorBrush x:Key="SelectedBrush" Color="{StaticResource SelectedColor}" />
     <SolidColorBrush x:Key="BorderBrush" Color="{StaticResource BorderColor}" />
+    <SolidColorBrush x:Key="BorderStrongBrush" Color="{StaticResource BorderStrongColor}" />
+    <SolidColorBrush x:Key="InnerHairlineBrush" Color="{StaticResource InnerHairlineColor}" />
     <SolidColorBrush x:Key="TextBrush" Color="{StaticResource TextColor}" />
     <SolidColorBrush x:Key="MutedBrush" Color="{StaticResource MutedColor}" />
     <SolidColorBrush x:Key="FaintBrush" Color="{StaticResource FaintColor}" />
     <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}" />
+    <SolidColorBrush x:Key="AccentHoverBrush" Color="{StaticResource AccentHoverColor}" />
+    <SolidColorBrush x:Key="AccentPressedBrush" Color="{StaticResource AccentPressedColor}" />
+    <SolidColorBrush x:Key="AccentSoftBrush" Color="{StaticResource AccentSoftColor}" />
+    <SolidColorBrush x:Key="AccentStrongBrush" Color="{StaticResource AccentStrongColor}" />
+    <SolidColorBrush x:Key="AccentStrongHoverBrush" Color="{StaticResource AccentStrongHoverColor}" />
+    <SolidColorBrush x:Key="AccentStrongPressedBrush" Color="{StaticResource AccentStrongPressedColor}" />
+    <SolidColorBrush x:Key="AccentFaintBrush" Color="#147B84FB" />
+    <SolidColorBrush x:Key="AccentInnerHairlineBrush" Color="#33FFFFFF" />
     <SolidColorBrush x:Key="OnAccentBrush" Color="{StaticResource OnAccentColor}" />
     <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource SuccessColor}" />
     <SolidColorBrush x:Key="WarningBrush" Color="{StaticResource WarningColor}" />
     <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource ErrorColor}" />
+    <SolidColorBrush x:Key="SuccessSoftBrush" Color="{StaticResource SuccessSoftColor}" />
+    <SolidColorBrush x:Key="WarningSoftBrush" Color="{StaticResource WarningSoftColor}" />
+    <SolidColorBrush x:Key="ErrorSoftBrush" Color="{StaticResource ErrorSoftColor}" />
+    <SolidColorBrush x:Key="ScrollThumbBrush" Color="{StaticResource ScrollThumbColor}" />
+    <SolidColorBrush x:Key="ScrollThumbHoverBrush" Color="{StaticResource ScrollThumbHoverColor}" />
     <SolidColorBrush x:Key="ModalScrimBrush" Color="#99000000" />
     <SolidColorBrush x:Key="MatchStepPlacementBrush" Color="{StaticResource AccentColor}" />
     <SolidColorBrush x:Key="MatchStepReconfigureBrush" Color="{StaticResource MatchStepReconfigureColor}" />

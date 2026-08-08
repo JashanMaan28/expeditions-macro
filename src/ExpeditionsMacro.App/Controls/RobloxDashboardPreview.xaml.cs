@@ -1,6 +1,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interop;
+using System.Windows.Media;
 using System.Windows.Threading;
 using ExpeditionsMacro.App.Services;
 using ExpeditionsMacro.Core.Abstractions;
@@ -40,6 +41,32 @@ public partial class RobloxDashboardPreview :
             Dispatcher);
     }
 
+    // The polling timer only needs to run while pinning is
+    // actually possible; otherwise every tick is a no-op.
+    private void UpdateRefreshTimer()
+    {
+        bool shouldRun =
+            IsLoaded &&
+            _nativeDockingEnabled &&
+            !_releaseForClose &&
+            _ownedDialogSuspendDepth == 0 &&
+            _pinned &&
+            _dashboardActive &&
+            _ownerVisible;
+        if (shouldRun == _refreshTimer.IsEnabled)
+        {
+            return;
+        }
+        if (shouldRun)
+        {
+            _refreshTimer.Start();
+        }
+        else
+        {
+            _refreshTimer.Stop();
+        }
+    }
+
     public bool RequiresVisibleOwner =>
         _nativeDockingEnabled &&
         !_releaseForClose &&
@@ -61,6 +88,7 @@ public partial class RobloxDashboardPreview :
             ShowPlaceholder(
                 "Roblox pinning is disabled while rendering UI snapshots.");
         }
+        UpdateRefreshTimer();
     }
 
     public bool SetDashboardActive(
@@ -68,6 +96,7 @@ public partial class RobloxDashboardPreview :
         out string error)
     {
         _dashboardActive = active;
+        UpdateRefreshTimer();
         if (!active)
         {
             return TryAutoDetach(out error);
@@ -83,6 +112,7 @@ public partial class RobloxDashboardPreview :
         out string error)
     {
         _ownerVisible = visible;
+        UpdateRefreshTimer();
         if (!visible)
         {
             return TryAutoDetach(out error);
@@ -98,6 +128,7 @@ public partial class RobloxDashboardPreview :
         out string error)
     {
         _pinned = pinned;
+        UpdateRefreshTimer();
         if (!pinned)
         {
             bool detached =
@@ -130,12 +161,14 @@ public partial class RobloxDashboardPreview :
         out string error)
     {
         _releaseForClose = true;
+        UpdateRefreshTimer();
         if (TryDetach(out error))
         {
             return true;
         }
 
         _releaseForClose = false;
+        UpdateRefreshTimer();
         RefreshPin();
         return false;
     }
@@ -182,6 +215,7 @@ public partial class RobloxDashboardPreview :
         }
 
         _ownedDialogSuspendDepth = 1;
+        UpdateRefreshTimer();
         ShowPlaceholder(
             "Roblox pinning pauses while a macro message is open.");
         return true;
@@ -197,7 +231,37 @@ public partial class RobloxDashboardPreview :
         _ownedDialogSuspendDepth--;
         if (_ownedDialogSuspendDepth == 0)
         {
+            UpdateRefreshTimer();
             RefreshPin();
+        }
+    }
+
+    protected override void OnDpiChanged(
+        DpiScale oldDpi,
+        DpiScale newDpi)
+    {
+        base.OnDpiChanged(oldDpi, newDpi);
+        UpdatePinTargetSize(newDpi);
+    }
+
+    // The pinned Roblox client keeps its fixed physical
+    // pixel size, so the live-view box must shrink or grow
+    // with the monitor DPI to hug it without dead space.
+    private void UpdatePinTargetSize(DpiScale dpi)
+    {
+        double width =
+            WindowsRobloxWindowPin.ClientWidth /
+            Math.Max(dpi.DpiScaleX, 0.01);
+        double height =
+            WindowsRobloxWindowPin.ClientHeight /
+            Math.Max(dpi.DpiScaleY, 0.01);
+        if (Math.Abs(PinTarget.Width - width) > 0.1)
+        {
+            PinTarget.Width = width;
+        }
+        if (Math.Abs(PinTarget.Height - height) > 0.1)
+        {
+            PinTarget.Height = height;
         }
     }
 
@@ -205,6 +269,8 @@ public partial class RobloxDashboardPreview :
         object sender,
         RoutedEventArgs e)
     {
+        UpdatePinTargetSize(
+            VisualTreeHelper.GetDpi(this));
         _owner = Window.GetWindow(this);
         if (_owner is not null)
         {
@@ -213,7 +279,7 @@ public partial class RobloxDashboardPreview :
             _owner.Deactivated +=
                 Owner_ActivationChanged;
         }
-        _refreshTimer.Start();
+        UpdateRefreshTimer();
         RefreshPin();
     }
 

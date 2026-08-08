@@ -386,11 +386,11 @@ public partial class MacroPage
 
     private void ApplyTotals()
     {
-        VictoriesText.Text = TaskRows
+        VictoriesTile.Value = TaskRows
             .Sum(row => row.Progress.Victories)
             .ToString(
                 CultureInfo.InvariantCulture);
-        DefeatsText.Text = TaskRows
+        DefeatsTile.Value = TaskRows
             .Sum(row => row.Progress.Defeats)
             .ToString(
                 CultureInfo.InvariantCulture);

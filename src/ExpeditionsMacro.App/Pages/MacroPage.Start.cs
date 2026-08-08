@@ -100,8 +100,8 @@ public partial class MacroPage
         _macroOwned = true;
         _runtimeTimer.Start();
         MacroProgress.Value = 0;
-        VictoriesText.Text = "0";
-        DefeatsText.Text = "0";
+        VictoriesTile.Value = "0";
+        DefeatsTile.Value = "0";
         AppendLog(
             $"Starting macro plan '{plan.Name}'.");
 

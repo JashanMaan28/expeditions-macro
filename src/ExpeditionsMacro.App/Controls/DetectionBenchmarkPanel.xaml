@@ -57,6 +57,7 @@
             <TextBlock Style="{StaticResource Caption}"
                        Text="Capture &amp; logging" />
             <TextBlock x:Name="CaptureResult"
+                       FontFamily="{StaticResource MonoFont}"
                        Grid.Column="1"
                        Foreground="{DynamicResource TextBrush}" />
             <TextBlock Grid.Row="1"
@@ -64,6 +65,7 @@
                        Style="{StaticResource Caption}"
                        Text="Mode detection" />
             <TextBlock x:Name="ModeResult"
+                       FontFamily="{StaticResource MonoFont}"
                        Grid.Row="1"
                        Grid.Column="1"
                        Margin="0,6,0,0"
@@ -73,6 +75,7 @@
                        Style="{StaticResource Caption}"
                        Text="Root recovery" />
             <TextBlock x:Name="RecoveryResult"
+                       FontFamily="{StaticResource MonoFont}"
                        Grid.Row="2"
                        Grid.Column="1"
                        Margin="0,6,0,0"
@@ -82,6 +85,7 @@
                        Style="{StaticResource Caption}"
                        Text="Total work" />
             <TextBlock x:Name="TotalResult"
+                       FontFamily="{StaticResource MonoFont}"
                        Grid.Row="3"
                        Grid.Column="1"
                        Margin="0,6,0,0"
@@ -91,6 +95,7 @@
                        Style="{StaticResource Caption}"
                        Text="Production rate" />
             <TextBlock x:Name="RateResult"
+                       FontFamily="{StaticResource MonoFont}"
                        Grid.Row="4"
                        Grid.Column="1"
                        Margin="0,8,0,0"

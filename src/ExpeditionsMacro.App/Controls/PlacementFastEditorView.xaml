@@ -13,14 +13,16 @@
                                        MouseRightButtonDown="PlacementMarker_MouseRightButtonDown" />
         </DataTemplate>
         <DataTemplate x:Key="PlacementStepTemplate">
-            <Border Margin="0,0,0,6"
+            <Border x:Name="StepCard"
+                    Margin="0,0,0,6"
                     Padding="8"
-                    Height="62"
+                    Height="54"
                     VerticalAlignment="Top"
                     Background="{DynamicResource RaisedBrush}"
                     BorderBrush="{DynamicResource BorderBrush}"
                     BorderThickness="1"
-                    CornerRadius="4">
+                    CornerRadius="{StaticResource RadiusControl}"
+                    SnapsToDevicePixels="True">
                 <Grid MinHeight="46">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="5" />
@@ -49,7 +51,8 @@
                                           Foreground="{DynamicResource FaintBrush}"
                                           Icon="GripVertical" />
                     </Border>
-                    <StackPanel Grid.Column="2"
+                    <StackPanel x:Name="StepTitlePanel"
+                                Grid.Column="2"
                                 Margin="2,0,10,0"
                                 VerticalAlignment="Center">
                         <TextBlock x:Name="StepTitleText"
@@ -63,6 +66,29 @@
                                    Text="{Binding CoordinateLabel}"
                                    TextTrimming="CharacterEllipsis" />
                     </StackPanel>
+                    <Grid x:Name="StartGameBoundary"
+                          Grid.Column="2"
+                          Grid.ColumnSpan="2"
+                          Margin="2,0,12,0"
+                          VerticalAlignment="Center"
+                          Visibility="Collapsed">
+                        <Border Height="3"
+                                VerticalAlignment="Center"
+                                Background="{DynamicResource SuccessBrush}"
+                                CornerRadius="1.5"
+                                SnapsToDevicePixels="True" />
+                        <Border Height="20"
+                                Padding="10,0"
+                                HorizontalAlignment="Center"
+                                Background="{DynamicResource SuccessSoftBrush}"
+                                CornerRadius="{StaticResource RadiusBadge}"
+                                SnapsToDevicePixels="True">
+                            <TextBlock VerticalAlignment="Center"
+                                       Style="{StaticResource GroupLabel}"
+                                       Foreground="{DynamicResource SuccessBrush}"
+                                       Text="START GAME" />
+                        </Border>
+                    </Grid>
                     <StackPanel x:Name="StepSummaryPanel"
                                 Grid.Column="3"
                                 Margin="0,0,12,0"
@@ -133,12 +159,18 @@
                     <Setter TargetName="StepTitleText"
                             Property="Foreground"
                             Value="{DynamicResource MatchStepStartBrush}" />
-                    <Setter TargetName="StepSecondaryText"
+                    <Setter TargetName="StepTitlePanel"
                             Property="Visibility"
                             Value="Collapsed" />
                     <Setter TargetName="StepSummaryPanel"
                             Property="Visibility"
                             Value="Collapsed" />
+                    <Setter TargetName="StartGameBoundary"
+                            Property="Visibility"
+                            Value="Visible" />
+                    <Setter TargetName="StepCard"
+                            Property="Height"
+                            Value="44" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Kind}"
                              Value="{x:Static core:MatchStepKind.Delay}">
@@ -184,7 +216,8 @@
                 Background="{DynamicResource SurfaceBrush}"
                 BorderBrush="{DynamicResource BorderBrush}"
                 BorderThickness="1"
-                CornerRadius="5">
+                CornerRadius="{StaticResource RadiusSurface}"
+                SnapsToDevicePixels="True">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -249,7 +282,8 @@
                 <Border Background="{DynamicResource SurfaceBrush}"
                         BorderBrush="{DynamicResource BorderBrush}"
                         BorderThickness="1"
-                        CornerRadius="5"
+                        CornerRadius="{StaticResource RadiusSurface}"
+                        SnapsToDevicePixels="True"
                         ClipToBounds="True">
                     <Grid>
                         <ScrollViewer x:Name="PlacementScrollViewer"
@@ -294,22 +328,25 @@
                                 </Canvas>
                             </Grid>
                         </ScrollViewer>
-                        <Border Margin="10"
-                                Padding="4"
+                        <Border Margin="8"
+                                Padding="3"
                                 HorizontalAlignment="Right"
-                                VerticalAlignment="Top"
-                                Background="{DynamicResource RaisedBrush}"
+                                VerticalAlignment="Bottom"
+                                Background="{DynamicResource SurfaceBrush}"
                                 BorderBrush="{DynamicResource BorderBrush}"
                                 BorderThickness="1"
-                                CornerRadius="5">
+                                CornerRadius="{StaticResource RadiusControl}"
+                                SnapsToDevicePixels="True">
                             <StackPanel Orientation="Horizontal">
-                                <Button Style="{StaticResource IconButton}" Width="32" MinWidth="32" Height="32"
+                                <Button Style="{StaticResource IconButton}" Width="28" MinWidth="28" Height="28"
                                         icons:Lucide.Icon="Minus" ToolTip="Zoom out" Click="ZoomOut_Click" />
-                                <Button x:Name="PlacementZoomButton" Margin="4,0" MinWidth="58" Height="32"
+                                <Button x:Name="PlacementZoomButton" Margin="3,0" MinWidth="54" Height="28"
+                                        FontFamily="{StaticResource MonoFont}"
+                                        FontSize="11"
                                         Content="100%"
                                         ToolTip="Scroll to zoom. Hold the middle mouse button and drag to pan. Click to reset."
                                         Click="ResetZoom_Click" />
-                                <Button Style="{StaticResource IconButton}" Width="32" MinWidth="32" Height="32"
+                                <Button Style="{StaticResource IconButton}" Width="28" MinWidth="28" Height="28"
                                         icons:Lucide.Icon="Plus" ToolTip="Zoom in" Click="ZoomIn_Click" />
                             </StackPanel>
                         </Border>
@@ -326,7 +363,8 @@
                     Background="{DynamicResource SurfaceBrush}"
                     BorderBrush="{DynamicResource BorderBrush}"
                     BorderThickness="1"
-                    CornerRadius="5">
+                    CornerRadius="{StaticResource RadiusSurface}"
+                    SnapsToDevicePixels="True">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />

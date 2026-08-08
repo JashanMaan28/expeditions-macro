@@ -5,8 +5,12 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Themes/Base.xaml" />
-                <ResourceDictionary Source="Themes/Forms.xaml" />
+                <ResourceDictionary Source="Themes/Typography.xaml" />
+                <ResourceDictionary Source="Themes/Metrics.xaml" />
+                <ResourceDictionary Source="Themes/Controls.Buttons.xaml" />
+                <ResourceDictionary Source="Themes/Controls.Inputs.xaml" />
+                <ResourceDictionary Source="Themes/Controls.Chrome.xaml" />
+                <ResourceDictionary Source="Themes/Controls.Feedback.xaml" />
                 <ResourceDictionary Source="Themes/PlacementEditor.xaml" />
                 <ResourceDictionary Source="Themes/Dark.xaml" />
             </ResourceDictionary.MergedDictionaries>
