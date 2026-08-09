@@ -183,23 +183,12 @@
                         <ContentPresenter Grid.Column="1" Margin="8,0,0,0" VerticalAlignment="Center" RecognizesAccessKey="True" />
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <!-- Fade.Shown routes the checkmark through MotionPolicy so the tick snaps
+                             for reduced-motion users and for deterministic snapshot captures. -->
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="Box" Property="Background" Value="{DynamicResource AccentStrongBrush}" />
                             <Setter TargetName="Box" Property="BorderBrush" Value="{DynamicResource AccentStrongBrush}" />
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="CheckIcon" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.12" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="CheckIcon" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.12" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.ExitActions>
+                            <Setter TargetName="CheckIcon" Property="icons:Fade.Shown" Value="True" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Box" Property="BorderBrush" Value="{DynamicResource AccentBrush}" /></Trigger>
                         <Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="Box" Property="BorderBrush" Value="{DynamicResource AccentBrush}" /><Setter TargetName="FocusRing" Property="BorderBrush" Value="{DynamicResource AccentSoftBrush}" /></Trigger>

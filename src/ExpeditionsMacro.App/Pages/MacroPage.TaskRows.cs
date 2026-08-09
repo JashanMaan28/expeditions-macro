@@ -47,6 +47,9 @@ public partial class MacroPage
     private void ShowPlanBlocksStatus(
         string message)
     {
+        // Callers that report an autosave failure set the flag back afterwards; every
+        // other message replaces the failure, so the stale-error tracking clears here.
+        _planBlocksStatusIsSaveError = false;
         PlanBlocksStatusText.Text = message;
         PlanBlocksStatusText.Visibility =
             string.IsNullOrWhiteSpace(message)

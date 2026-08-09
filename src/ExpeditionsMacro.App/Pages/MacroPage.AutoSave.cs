@@ -17,6 +17,7 @@ public partial class MacroPage
     private bool _suppressPlanAutoSave;
     private bool _changingPlan;
     private bool _planAutoSaveDisposed;
+    private bool _planBlocksStatusIsSaveError;
     private string? _currentPlanId;
     private string? _persistedPlanId;
 
@@ -93,6 +94,7 @@ public partial class MacroPage
         {
             ShowPlanBlocksStatus(
                 $"Could not save: {error.Message}");
+            _planBlocksStatusIsSaveError = true;
         }
     }
 
@@ -139,6 +141,13 @@ public partial class MacroPage
                     ShowPlanAutoSaveIndicator(
                         StatusDotState.Succeeded,
                         "Saved");
+                    // A retry that succeeds must retract the earlier failure detail,
+                    // otherwise the page claims "Saved" and "Could not save" at once.
+                    if (_planBlocksStatusIsSaveError)
+                    {
+                        ShowPlanBlocksStatus(
+                            string.Empty);
+                    }
                     RefreshSavedPlanChoice(
                         e.Plan);
                     break;
@@ -151,6 +160,7 @@ public partial class MacroPage
                     ShowPlanBlocksStatus(
                         $"Could not save: " +
                         $"{e.Error?.Message ?? "Unknown error."}");
+                    _planBlocksStatusIsSaveError = true;
                     break;
             }
         });
